@@ -25,6 +25,7 @@ def insert_series_db():
         for series_data in series_data_list:
             series_collection.insert_one(series_data)
             print(f"Insertion dans MongoDB : {series_data['title']}")
+        
 
 if __name__ == '__main__':
     insert_series_db()

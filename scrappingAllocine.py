@@ -34,7 +34,7 @@ def get_series_info(url):
                 creator_element = creator_section.find_all('span', class_='dark-grey-link')
                 for creator in creator_element:
                     creators.append(creator.text.strip())
-            creator = creators if creators else 'Créateur non spécifié'
+            creator = ', '.join(creators) if creators else 'Créateur non spécifié'
 
             actors = []
             actor_section = serie.find('div', class_='meta-body-item meta-body-actor')
@@ -45,16 +45,16 @@ def get_series_info(url):
 
             rating_items = serie.find_all('div', class_='rating-item')
 
-            press_rating = 'Note de presse non disponible'
-            audience_rating = 'Note des spectateurs non disponible'
+            press_rating = 'Non disponible'
+            audience_rating = 'Non disponible'
 
             for rating_item in rating_items:
                 if 'Presse' in rating_item.text:
                     press_note = rating_item.find('span', class_='stareval-note')
-                    press_rating = press_note.text.strip() if press_note else 'Note de presse non disponible'
+                    press_rating = press_note.text.strip() if press_note else 'Non disponible'
                 elif 'Spectateurs' in rating_item.text:
                     audience_note = rating_item.find('span', class_='stareval-note')
-                    audience_rating = audience_note.text.strip() if audience_note else 'Note des spectateurs non disponible'
+                    audience_rating = audience_note.text.strip() if audience_note else 'Non disponible'
 
             series_data = {
                 'title': title,
@@ -65,7 +65,8 @@ def get_series_info(url):
                 'press_rating': press_rating,
                 'audience_rating': audience_rating
             }
-
+            
+            
             series_data_list.append(series_data)
 
         return series_data_list  # Retourner la liste des données des séries
@@ -73,4 +74,5 @@ def get_series_info(url):
     else:
         print(f"Erreur: La page {url} n'a pas pu être chargée. Code statut: {response.status_code}")
         return []
+
 
