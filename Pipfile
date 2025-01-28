@@ -4,6 +4,19 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+dash = "*"
+dash-core-components = "*"
+dash-html-components = "*"
+dash-table = "*"
+beautifulsoup4 = "*"
+pymongo = "*"
+requests = "*"
+plotly = "*"
+pandas = "*"
+selenium = "*"
+lxml = "*"
+scrapy = "*"
+redis = "*"
 
 [dev-packages]
 
