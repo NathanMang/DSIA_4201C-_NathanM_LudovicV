@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   mongo:
     image: mongo:latest
@@ -12,6 +10,7 @@ services:
 
   app:
     build: .
+    image: projetdataengineeringnathan-app
     container_name: projetdataengineeringnathan-app
     command: python main.py
     depends_on:

@@ -1,9 +1,9 @@
-import dash
+"""Home page"""
 from dash import html
 
-def create_home_layout():
+def create_home_page():
     """Retourne la mise en page améliorée de la page d'accueil"""
-    return html.Div(children=[
+    layout = html.Div(children=[
         # Section de titre avec fond coloré et ombre portée
         html.Div([
             html.H1("Bienvenue sur l'application Dash", 
@@ -71,3 +71,5 @@ def create_home_layout():
         "padding": "20px",  # Espacement global
         "background-color": "#f7f7f7",  # Fond clair pour la page
     })
+
+    return layout

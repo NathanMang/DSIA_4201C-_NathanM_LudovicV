@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+import re
 
 def get_series_info(url):
     try:
@@ -28,15 +29,16 @@ def get_series_info(url):
                     genre_elements = genre_section.find_all('span', class_='dark-grey-link')
                     for genre in genre_elements:
                         genres.append(genre.text.strip())
-                genres = ', '.join(genres) if genres else 'Genre non spécifié'
+                else: genres.append('Non spécifié')
+                genres = ', '.join(genres)
 
                 creators = []
                 creator_section = serie.find('div', class_='meta-body-item meta-body-direction')
                 if creator_section:
-                    creator_element = creator_section.find_all('span', class_='dark-grey-link')
-                    for creator in creator_element:
+                    creator_elements = creator_section.find_all('span', class_='dark-grey-link')
+                    for creator in creator_elements:
                         creators.append(creator.text.strip())
-                creator = creators if creators else 'Créateur non spécifié'
+                else: creators.append('Non spécifié')
 
                 actors = []
                 actor_section = serie.find('div', class_='meta-body-item meta-body-actor')
@@ -44,6 +46,7 @@ def get_series_info(url):
                     actor_elements = actor_section.find_all('span', class_='dark-grey-link')
                     for actor in actor_elements[:3]:  # Prendre les 3 premiers acteurs
                         actors.append(actor.text.strip())
+                else: actors.append('Non spécifié')
 
                 # Récupérer l'URL de la page de détails (URL relative)
                 url_series = serie.find('a', class_='meta-title-link')
@@ -72,16 +75,15 @@ def get_series_info(url):
                     'title': title,
                     'ranking': ranking,
                     'genres': genres,
-                    'creator': creator,
+                    'creator': creators,
                     'actors': actors,
                     'press_rating': press_rating,
                     'audience_rating': audience_rating,
                     'url': url_series,
-                    'country': series_details.get('country', 'Pays non trouvé'),
+                    'country': series_details.get('country', 'Pays non trouvé')
                 }
-                
                 series_data_list.append(series_data)
-
+                
             return series_data_list  # Retourner la liste des données des séries
     
         else:
@@ -102,7 +104,5 @@ def get_series_details(url):
     page_soup = BeautifulSoup(response.text, 'html.parser')
     country_tag = page_soup.find('div', class_='meta-body-item meta-body-nationality')
     country = country_tag.find('span', class_='dark-grey-link').text.strip() if country_tag else 'Pays non trouvé'
-    
+
     return {'country': country}
-
-

@@ -1,6 +1,7 @@
+"""Series layout"""
+
 from dash import html, dcc
 import dash_table
-import pandas as pd
 from mongoDB import get_series_from_db
 
 def create_layout(app):

@@ -48,6 +48,3 @@ def get_series_from_db():
     series_data = list(collection.find())
     client.close()
     return series_data
-
-if __name__ == '__main__':
-    insert_series_db()

@@ -1,24 +1,29 @@
+"""Page router"""
+
 import dash
 from dash import dcc, html
 from dash.dependencies import Input, Output
 from dashboard.series_page import create_series_page  
-from dashboard.home_page import create_home_layout
+from dashboard.home_page import create_home_page
 from dashboard.map_page import create_map_page
 
 def create_router_page():
     """Création du routeur pour les pages"""
 
+    # Créer l'application
     app = dash.Dash(__name__, suppress_callback_exceptions=True)
     
+    # Créer le contenu de la page
     app.layout = html.Div(style={"font-family": "Arial, sans-serif", "background-color": "#f7f7f7", "min-height": "100vh"}, children=[
         dcc.Location(id='url', refresh=False),
 
         html.Nav(style={
+            # Style de la barre de navigation
             "background-color": "#3b3b3b",  # Fond 
             "padding": "10px 20px",  # Espacement 
             "border-radius": "5px",  # Bords arrondis
             "margin-bottom": "20px"  # Marge pour séparer la navigation du contenu
-        }, children=[
+        }, children=[ # Liste des liens
             dcc.Link('Accueil', href='/', id='link-home', style={
                 "color": "white",  
                 "margin-right": "20px",  
@@ -75,9 +80,9 @@ def create_router_page():
 
         # Gérer l'affichage de la page en fonction de l'URL
         if pathname == '/':
-            return create_home_layout(), active_style, link_style, link_style  # Page d'accueil active
+            return create_home_page(), active_style, link_style, link_style  # Page d'accueil active
         elif pathname == '/series':
-            return create_series_page(app), link_style, active_style, link_style  # Page des séries active
+            return create_series_page(), link_style, active_style, link_style  # Page des séries active
         elif pathname == '/carte':
             return create_map_page(app), link_style, link_style, active_style  # Page de la carte active
         else:

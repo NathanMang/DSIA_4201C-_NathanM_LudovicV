@@ -1,11 +1,12 @@
-import dash
+"""Series page"""
+
 from dash import html, dcc, dash_table
 from dash.dependencies import Input, Output
 from mongoDB import get_series_from_db
 from dashboard.dataFormat import format_data  
 
 
-def create_series_page(app):
+def create_series_page():
     """Page pour afficher les séries avec une fonctionnalité de recherche et de tri"""
 
     # Récupérer les séries depuis MongoDB
@@ -13,15 +14,14 @@ def create_series_page(app):
 
     # Colonnes du tableau
     columns = [
-        {'name': 'Titre', 'id': 'title'},
         {'name': 'Classement', 'id': 'ranking'},
+        {'name': 'Titre', 'id': 'title'},
         {'name': 'Genres', 'id': 'genres'},
-        {'name': 'Créateur', 'id': 'creator'},
+        {'name': 'Réalisateur', 'id': 'creator'},
         {'name': 'Acteurs', 'id': 'actors'},
         {'name': 'Note de presse', 'id': 'press_rating'},
         {'name': 'Note des spectateurs', 'id': 'audience_rating'},
-        {'name': 'URL', 'id': 'url'},
-        {'name': 'Pays', 'id': 'country'}
+        {'name': 'Pays', 'id': 'country'},
     ]
     
     initial_data = format_data(series_data)
@@ -46,7 +46,6 @@ def create_series_page(app):
                     {'label': 'Note', 'value': 'audience_rating'},
                     {'label': 'Pays', 'value': 'country'},
                 ],
-                value='title',  # Critère par défaut
                 style={'width': '200px', 'margin-top': '10px', 'margin-left': '10px'}
             ),
         ], style={'margin-bottom': '20px', 'textAlign': 'center'}),
@@ -64,10 +63,14 @@ def create_series_page(app):
         ),
     ])
 
+    return layout
+
+def create_series_callback(app):
+
     # Callback pour filtrer les résultats et trier
     @app.callback(
         Output('series-table', 'data'),
-        [Input('search-input', 'value'), Input('sort-by-dropdown', 'value')]  
+        [Input('search-input', 'value'), Input('sort-by-dropdown', 'value')],   
     )
     def update_table(search_value, sort_by):
         series_data = get_series_from_db()
@@ -91,5 +94,3 @@ def create_series_page(app):
             series_data = sorted(series_data, key=lambda x: x['country'])
 
         return format_data(series_data)
-
-    return layout
