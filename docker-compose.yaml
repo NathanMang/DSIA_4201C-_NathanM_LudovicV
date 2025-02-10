@@ -6,18 +6,15 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
-    restart: always
 
-  app:
+  web:
     build: .
-    image: projetdataengineeringnathan-app
-    container_name: projetdataengineeringnathan-app
-    command: python main.py
+    image: dashboard-app
+    container_name: dashboard
     depends_on:
       - mongo
     ports:
-      - "8050:8050"
-    restart: on-failure
+      - "8050:80"
 
 volumes:
   mongo-data:

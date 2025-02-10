@@ -1,17 +1,20 @@
-# Utiliser une image Python officielle
-FROM python:3.13-slim
+# Utilisation d'une image Python officielle
+FROM python:3.12-slim
 
-# Définir le répertoire de travail
+# Définir le répertoire de travail dans le conteneur
 WORKDIR /app
 
-# Copier le fichier requirements.txt dans le conteneur
-COPY requirements.txt .
+# Copier les fichiers nécessaires
+COPY requirements.txt requirements.txt
 
 # Installer les dépendances
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copier le reste de l'application dans le conteneur
+# Copier le code source dans le conteneur
 COPY . .
 
-# Définir la commande à exécuter au démarrage du conteneur
+# Exposer le port sur lequel Dash fonctionne
+EXPOSE 8050
+
+# Commande pour démarrer l'application
 CMD ["python", "main.py"]

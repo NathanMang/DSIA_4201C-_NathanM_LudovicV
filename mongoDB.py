@@ -25,7 +25,7 @@ def insert_series_db():
             series_collection.insert_one(series_data)
 
     
-    for page_number in range(2, 4):  
+    for page_number in range(2, 10):  
         url = f"{base_url}?page={page_number}"
         series_data_list = get_series_info(url)
         

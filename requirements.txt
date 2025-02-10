@@ -1,4 +1,7 @@
-pymongo
 requests
 beautifulsoup4
+urllib3
+pymongo
 dash
+pandas
+plotly

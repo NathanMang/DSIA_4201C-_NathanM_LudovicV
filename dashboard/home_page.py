@@ -46,26 +46,6 @@ def create_home_page():
             "box-shadow": "0 -2px 5px rgba(0, 0, 0, 0.1)"
         }),
 
-        # Ajout d'une section pour des boutons interactifs ou des liens
-        html.Div([
-            html.Button("Explorer les Séries", 
-                        id="explore-button",
-                        style={
-                            "display": "block",
-                            "width": "250px",  # Largeur du bouton
-                            "margin": "20px auto",  # Centrer le bouton
-                            "padding": "15px",
-                            "background-color": "#ff7f50",  # Couleur du bouton
-                            "color": "white",  # Texte blanc
-                            "font-size": "1.2em",  # Taille de la police
-                            "border": "none",
-                            "border-radius": "5px",  # Bords arrondis
-                            "cursor": "pointer",  # Curseur pointer pour l'interaction
-                        })
-        ], style={
-            "text-align": "center",  # Centrer les éléments
-        }),
-
     ], style={
         "font-family": "Arial, sans-serif",  # Police générale
         "padding": "20px",  # Espacement global
